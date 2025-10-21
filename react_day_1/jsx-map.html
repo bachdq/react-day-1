@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="vi">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>React.createElement Practice</title>
+    <script crossorigin src="https://unpkg.com/react@18/umd/react.development.js"></script>
+    <script crossorigin src="https://unpkg.com/react-dom@18/umd/react-dom.development.js"></script>
+    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+</head>
+
+<body>
+    <div id="root"></div>
+    <script type="text/babel">
+        const tasks = [
+            { id: 1, title: 'Học HTML', isCompleted: true },
+            { id: 2, title: 'Học CSS', isCompleted: true },
+            { id: 3, title: 'Học JavaScript', isCompleted: false },
+            { id: 4, title: 'Học React', isCompleted: false },
+            { id: 5, title: 'Học NodeJs', isCompleted: false },
+        ];
+        function App() {
+            return (
+                <ul>
+                    {tasks.map(task => (
+                        <li
+                            key={task.id}
+                            style={{
+                                textDecoration: task.isCompleted ? 'line-through' : 'none',
+                            }}
+                        >
+                            {task.title}
+                        </li>
+                    ))}
+                </ul>
+            );
+        }
+        const wrapper = React.createElement(
+            React.Fragment,
+            null,
+            <App />
+        );
+        ReactDOM.createRoot(document.getElementById('root')).render(wrapper);
+    </script>
+</body>
+
+</html>

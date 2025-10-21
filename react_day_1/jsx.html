@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="vi">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>React.createElement Practice</title>
+    <script crossorigin src="https://unpkg.com/react@18/umd/react.development.js"></script>
+    <script crossorigin src="https://unpkg.com/react-dom@18/umd/react-dom.development.js"></script>
+    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+    <style>
+        .wrapper {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 20px;
+        }
+
+        button,
+        a {
+            background-color: #e0e0e0;
+            cursor: pointer;
+            transition: 0.2s;
+            border: none;
+        }
+
+        button:hover,
+        a:hover {
+            opacity: 0.8;
+        }
+
+        .btn-rounded {
+            border-radius: 20px;
+        }
+
+        .btn-bordered {
+            border: 2px solid #e0e0e0;
+            background-color: transparent;
+        }
+
+        .btn-bordered:hover {
+            background-color: #f0f0f0;
+        }
+
+        .btn-primary {
+            background-color: #007bff;
+            color: white;
+        }
+
+        .btn-primary:hover {
+            background-color: #0056b3;
+            opacity: 1;
+        }
+
+        .btn-s {
+            padding: 6px 12px;
+            font-size: 12px;
+        }
+
+        .btn-m {
+            padding: 10px 16px;
+            font-size: 14px;
+        }
+
+        .btn-l {
+            padding: 14px 24px;
+            font-size: 16px;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="root"></div>
+    <script type="text/babel">
+        function Button({
+            primary,
+            rounded,
+            bordered,
+            href,
+            size = 'm',
+            children,
+            className,
+            ...passProps
+        }) {
+            const classNames = [];
+            if (primary) classNames.push('btn-primary');
+            if (rounded) classNames.push('btn-rounded');
+            if (bordered) classNames.push('btn-bordered');
+            if (size) classNames.push(`btn-${size}`);
+            if (className) classNames.push(className);
+
+            const Tag = href ? 'a' : 'button';
+
+            return (
+                <Tag
+                    {...passProps}
+                    className={classNames.join(" ")}
+                    href={href}
+                >
+                    {children}
+                </Tag>
+            );
+        }
+
+        function App() {
+            return (
+                <div class="wrapper">
+                    <Button type="button" size="s">Small Button</Button>
+                    <Button type="button">Normal Button</Button>
+                    <Button type="button" size="l">Large Button</Button>
+                    <Button type="submit" primary rounded bordered>Submit Button</Button>
+                    <Button rounded>Rounded Button</Button>
+                    <Button bordered>Bordered Button</Button>
+                    <Button href="https://google.com" target="_blank" primary>Google</Button>
+                </div>
+            );
+        }
+
+        const wrapper = React.createElement(
+            React.Fragment,
+            null,
+            <App />
+        );
+        ReactDOM.createRoot(document.getElementById('root')).render(wrapper);
+    </script>
+</body>
+
+</html>
